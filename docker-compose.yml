@@ -1,0 +1,40 @@
+version: '2'
+services:
+
+    server-apache-php:
+        build:
+            context: .docker/server-apache-php
+        image: project/magento-server-apache-php
+        container_name: magento_iedux_server
+        volumes:
+            - ./.docker/server-apache-php/conf/000-default.conf:/etc/apache2/sites-available/000-default.conf
+            - ./.docker/server-apache-php/conf/php.ini:/etc/php/7.0/apache2/conf.d/magento-php.ini
+            - ./.docker/server-apache-php/conf/php.ini:/etc/php/7.0/cli/conf.d/magento-php.ini
+            - ./pub:/var/www/html
+        ports:
+            - 80:80
+            - 443:443
+            - 9001:9000
+        links:
+            - database:mysql
+        tty: true
+        
+        env_file:
+            - ./.project-env
+    database:
+        build:
+            context: .docker/database
+
+        image: project/magento-database
+
+        container_name: magento_iedux_database
+
+        volumes:
+            - ./.docker/database/data:/var/lib/mysql
+        ports:
+            - 3307:3306
+
+        tty: true
+
+        env_file:
+            - ./.project-env

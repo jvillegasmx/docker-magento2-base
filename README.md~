@@ -10,11 +10,8 @@ After building all just go to http:127.0.0.1 and you can see the files.
 for run
 
 docker-compose up -d //will  run and build the containers
-docker ps //to check the IDs containers.
-docker exec -ti CONTAINER_ID /bin/bash //Access to the container
-
-docker inspect magento_iedux_database //to check the details Host IP of the database docker
 
 
-Reindex Magento
+
+Reindex
 /usr/bin/php /var/www/html/bin/magento  indexer:reindex
